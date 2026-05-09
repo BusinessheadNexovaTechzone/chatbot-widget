@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot Test</title>
+
+  <!-- 🔥 ADD THIS -->
+  <link rel="stylesheet" href="https://chatbot-six-beta-63.vercel.app/style.css" />
+
+</head>
+<body>
+
+<h2>My Chatbot 🚀</h2>
+
+<div id="chatbot-root"></div>
+
+<script>
+  window.ChatBotConfig = {
+    apiUrl: "https://chatbot-ai-v1-fkdqfqavezdwf6ft.centralindia-01.azurewebsites.net",
+    targetId: "chatbot-root"
+  };
+</script>
+
+<script src="https://chatbot-six-beta-63.vercel.app/chatbot.iife.js"></script>
+
+<script>
+  ChatBot.init(window.ChatBotConfig);
+</script>
+
+</body>
+</html>

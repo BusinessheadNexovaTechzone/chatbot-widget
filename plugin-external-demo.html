@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>External Chatbot Widget Demo</title>
+    <link rel="stylesheet" href="./dist/style.css" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eef2ff;
+      }
+
+      .demo-box {
+        width: min(700px, calc(100% - 32px));
+        padding: 32px;
+        background: white;
+        border-radius: 22px;
+        box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+        text-align: center;
+      }
+
+      .demo-box h1 {
+        margin: 0 0 16px;
+      }
+
+      .demo-box p {
+        margin: 0;
+        color: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-box">
+      <h1>External Widget Embed Demo</h1>
+      <p>
+        This page loads your widget script the same way another website would.
+        The chat UI should appear in the bottom-right corner.
+      </p>
+    </div>
+
+    <script>
+      window.ChatBotConfig = {
+        apiUrl: "https://chatbot-ai-v1-fkdqfqavezdwf6ft.centralindia-01.azurewebsites.net",
+        targetId: "chatbot-root"
+      };
+    </script>
+
+    <script src="./dist/chatbot.iife.js"></script>
+    <script>
+      if (window.ChatBot && typeof window.ChatBot.init === "function") {
+        window.ChatBot.init(window.ChatBotConfig);
+      } else {
+        console.error("ChatBot widget is not available.");
+      }
+    </script>
+  </body>
+</html>

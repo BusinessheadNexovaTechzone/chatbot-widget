@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot Widget Demo</title>
+    <link rel="stylesheet" href="./dist/style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f1f5f9;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .page-content {
+        text-align: center;
+        max-width: 680px;
+        padding: 24px;
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        background: white;
+      }
+
+      h1 {
+        margin-bottom: 12px;
+      }
+
+      p {
+        margin-bottom: 20px;
+        color: #475569;
+      }
+
+      code {
+        background: #f8fafc;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-family: Consolas, Monaco, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-content">
+      <h1>Chatbot Widget Demo</h1>
+      <p>
+        This page loads your built chatbot widget in <strong>mock mode</strong>, so the UI
+        works even when your backend is not running.
+      </p>
+      <p>
+        After the widget loads, type a message and the chat UI will reply with demo responses.
+      </p>
+      <p>
+        If you later have a backend, replace <code>mock: true</code> with <code>apiUrl</code> / <code>wsUrl</code>.
+      </p>
+    </div>
+
+    <script>
+      window.ChatBotConfig = {
+        apiUrl: "https://chatbot-ai-v1-fkdqfqavezdwf6ft.centralindia-01.azurewebsites.net",
+        targetId: "chatbot-root"
+      };
+    </script>
+
+    <script src="./dist/chatbot.iife.js"></script>
+    <script>
+      if (window.ChatBot && typeof window.ChatBot.init === "function") {
+        window.ChatBot.init(window.ChatBotConfig);
+      } else {
+        console.error("ChatBot widget did not load correctly.");
+      }
+    </script>
+  </body>
+</html>

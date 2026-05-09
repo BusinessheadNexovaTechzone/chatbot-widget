@@ -1,0 +1,107 @@
+.chat-header {
+  background: linear-gradient(135deg, #075e54 0%, #0a7e5e 100%);
+  color: white;
+  padding: 15px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bot-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 6px;
+  object-fit: contain;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.05); }
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-size: 11px;
+  opacity: 0.75;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.header-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Online status */
+.status {
+  font-size: 12px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.status.online::before {
+  background: #25d366;
+  animation: blink 2s infinite;
+}
+
+.status.offline::before {
+  background: #aaa;
+  animation: none;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@media (max-width: 480px) {
+  .chat-header {
+    padding: 12px 14px;
+  }
+
+  .app-title {
+    font-size: 16px;
+  }
+
+  .header-subtitle {
+    font-size: 10px;
+  }
+
+  .bot-icon {
+    width: 36px;
+    height: 36px;
+  }
+}
