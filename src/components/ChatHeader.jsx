@@ -11,7 +11,7 @@ const ChatHeader = ({ isConnected }) => {
           className="bot-icon"
         />
         <div className="header-titles">
-          <h1 className="app-title">Nexo</h1>
+        
           <span className="header-subtitle">AI Assistant</span>
         </div>
       </div>
