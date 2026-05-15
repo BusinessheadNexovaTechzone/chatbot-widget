@@ -5,11 +5,41 @@
   max-width: 420px;
   height: 90vh;
   max-height: 600px;
-  background: #fff;
+  background: var(--container-bg, #fff);
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   animation: slideIn 0.4s ease-out;
+}
+
+.theme-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px 16px 0;
+  background: transparent;
+  justify-content: center;
+}
+
+.theme-swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+}
+
+.theme-swatch.active {
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.12);
+}
+
+.theme-swatch:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.8);
+  outline-offset: 2px;
 }
 
 @keyframes slideIn {
