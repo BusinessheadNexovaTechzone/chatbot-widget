@@ -12,6 +12,165 @@ const WELCOME_MESSAGE = {
   isStreaming: false,
 };
 
+const themeOptions = [
+  {
+    name: "Emerald",
+    primary: "#075e54",
+    secondary: "#25d366",
+    header: "#075e54",
+    containerBg: "#f7fff7",
+    messageUser: "#dcf8c6",
+    messageBot: "#e3e3e3",
+    input: "#f0f0f0",
+    textPrimary: "#0f172a",
+    textSecondary: "#4b5563",
+    border: "#d1d5db",
+  },
+  {
+    name: "Ocean",
+    primary: "#0b6e99",
+    secondary: "#3da9fc",
+    header: "#0b6e99",
+    containerBg: "#eff8ff",
+    messageUser: "#d9efff",
+    messageBot: "#dee3eb",
+    input: "#f5f9ff",
+    textPrimary: "#0f172a",
+    textSecondary: "#475569",
+    border: "#cfd8e9",
+  },
+  {
+    name: "Sunset",
+    primary: "#d64545",
+    secondary: "#f08a5d",
+    header: "#d64545",
+    containerBg: "#fff3f0",
+    messageUser: "#ffe3e3",
+    messageBot: "#f2e8e8",
+    input: "#fff5f4",
+    textPrimary: "#1f2937",
+    textSecondary: "#4b5563",
+    border: "#f1c7c7",
+  },
+  {
+    name: "Lavender",
+    primary: "#7c3aed",
+    secondary: "#a855f7",
+    header: "#7c3aed",
+    containerBg: "#f6f0ff",
+    messageUser: "#e9d5ff",
+    messageBot: "#ece9ff",
+    input: "#faf5ff",
+    textPrimary: "#111827",
+    textSecondary: "#4b5563",
+    border: "#d8b4fe",
+  },
+  {
+    name: "Coral",
+    primary: "#f97316",
+    secondary: "#fb923c",
+    header: "#f97316",
+    containerBg: "#fff7ed",
+    messageUser: "#ffe7d1",
+    messageBot: "#f5e7dd",
+    input: "#fff3eb",
+    textPrimary: "#1f2937",
+    textSecondary: "#525252",
+    border: "#fed7aa",
+  },
+  {
+    name: "Mint",
+    primary: "#14b8a6",
+    secondary: "#5eead4",
+    header: "#14b8a6",
+    containerBg: "#ecfdf5",
+    messageUser: "#d1fae5",
+    messageBot: "#e7f5f2",
+    input: "#f6fffb",
+    textPrimary: "#0f172a",
+    textSecondary: "#334155",
+    border: "#a7f3d0",
+  },
+  {
+    name: "Midnight",
+    primary: "#0f172a",
+    secondary: "#334155",
+    header: "#0f172a",
+    containerBg: "#f8fafc",
+    messageUser: "#dbeafe",
+    messageBot: "#e2e8f0",
+    input: "#f1f5f9",
+    textPrimary: "#111827",
+    textSecondary: "#475569",
+    border: "#cbd5e1",
+  },
+  {
+    name: "Cyan",
+    primary: "#0891b2",
+    secondary: "#22d3ee",
+    header: "#0891b2",
+    containerBg: "#ecfeff",
+    messageUser: "#cffafe",
+    messageBot: "#e0f2fe",
+    input: "#f0fdff",
+    textPrimary: "#0f172a",
+    textSecondary: "#334155",
+    border: "#7dd3fc",
+  },
+  {
+    name: "Rose",
+    primary: "#be123c",
+    secondary: "#f472b6",
+    header: "#be123c",
+    containerBg: "#fff1f2",
+    messageUser: "#ffe4e6",
+    messageBot: "#f9d6dc",
+    input: "#fff5f7",
+    textPrimary: "#1f2937",
+    textSecondary: "#475569",
+    border: "#f9a8d4",
+  },
+  {
+    name: "Forest",
+    primary: "#166534",
+    secondary: "#4d7c0f",
+    header: "#166534",
+    containerBg: "#f0fdf4",
+    messageUser: "#dcfce7",
+    messageBot: "#e7f5e6",
+    input: "#f8faf7",
+    textPrimary: "#0f172a",
+    textSecondary: "#334155",
+    border: "#bbf7d0",
+  },
+  {
+    name: "Sand",
+    primary: "#d97706",
+    secondary: "#fbbf24",
+    header: "#d97706",
+    containerBg: "#fff7ed",
+    messageUser: "#ffedd5",
+    messageBot: "#faf7ef",
+    input: "#fffbeb",
+    textPrimary: "#1f2937",
+    textSecondary: "#525252",
+    border: "#fcd34d",
+  },
+  {
+    name: "Slate",
+    primary: "#334155",
+    secondary: "#64748b",
+    header: "#334155",
+    containerBg: "#f8fafc",
+    messageUser: "#e2e8f0",
+    messageBot: "#f1f5f9",
+    input: "#f8fafc",
+    textPrimary: "#0f172a",
+    textSecondary: "#475569",
+    border: "#cbd5e1",
+  },
+];
+
 const buildUrl = (baseUrl, path) => {
   const normalized = baseUrl?.toString().trim().replace(/\/$/, "") || "";
   return normalized ? `${normalized}${path}` : path;
@@ -67,6 +226,12 @@ const ChatContainer = ({ apiBaseUrl = "", wsBaseUrl = "", mockMode = false }) =>
   const [speechSupported, setSpeechSupported] = useState(false);
   const [useRetrieveEndpoint, setUseRetrieveEndpoint] = useState(false);
   const [useStreaming, setUseStreaming] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState(0);
+  const [showThemePicker, setShowThemePicker] = useState(false);
+
+  const activeTheme = themeOptions[selectedTheme];
+  const toggleThemePicker = () => setShowThemePicker((prev) => !prev);
 
   const wsRef = useRef(null);
   const sessionId = useRef(getSessionId());
@@ -223,6 +388,103 @@ const ChatContainer = ({ apiBaseUrl = "", wsBaseUrl = "", mockMode = false }) =>
 
   const handleStreamingToggle = () => {
     setUseStreaming((prev) => !prev);
+  };
+
+  const handleFileUpload = async (file) => {
+    if (!file || isStreaming || isUploading) return;
+
+    const userMsg = {
+      id: crypto.randomUUID(),
+      text: `Uploaded document: ${file.name}`,
+      sender: "user",
+      timestamp: new Date(),
+    };
+
+    const botMsgId = crypto.randomUUID();
+    const botMsg = {
+      id: botMsgId,
+      text: "Uploading document...",
+      sender: "bot",
+      timestamp: new Date(),
+      isStreaming: true,
+    };
+
+    setMessages((prev) => [...prev, userMsg, botMsg]);
+    setIsUploading(true);
+
+    try {
+      if (effectiveMockMode) {
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === botMsgId
+              ? { ...msg, text: `Document ${file.name} uploaded successfully.`, isStreaming: false }
+              : msg
+          )
+        );
+        return;
+      }
+
+      const uploadBase =
+        apiBaseUrl ||
+        "https://chatbot-ai-v01-fdcnezc3ach9gceu.centralindia-01.azurewebsites.net";
+      const apiUrl = buildUrl(uploadBase, "/api/v1/upload");
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("session_id", sessionId.current);
+
+      console.log("[ChatContainer] Upload request", {
+        endpoint: apiUrl,
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size,
+      });
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log("[ChatContainer] Upload response status", response.status);
+
+      if (!response.ok) {
+        const errorBody = await response.text();
+        console.error("[ChatContainer] Upload failed", {
+          endpoint: apiUrl,
+          status: response.status,
+          body: errorBody,
+        });
+        throw new Error(errorBody || "Upload request failed");
+      }
+
+      const data = await response.json().catch(() => null);
+      console.log("[ChatContainer] Upload response body", data);
+      const successMessage =
+        data?.message || data?.status || `Document ${file.name} uploaded successfully.`;
+
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === botMsgId
+            ? { ...msg, text: successMessage, isStreaming: false }
+            : msg
+        )
+      );
+    } catch (err) {
+      console.error(err);
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === botMsgId
+            ? {
+                ...msg,
+                text: "Document upload failed. Please try again.",
+                isStreaming: false,
+              }
+            : msg
+        )
+      );
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleVoiceToggle = () => {
@@ -492,19 +754,52 @@ const ChatContainer = ({ apiBaseUrl = "", wsBaseUrl = "", mockMode = false }) =>
     }
   };
   return (
-    <div className="chat-container">
-      <ChatHeader isConnected={isConnected} />
+    <div
+      className="chat-container"
+      style={{
+        "--primary-color": activeTheme.primary,
+        "--secondary-color": activeTheme.secondary,
+        "--message-user-bg": activeTheme.messageUser,
+        "--message-bot-bg": activeTheme.messageBot,
+        "--header-bg": activeTheme.header,
+        "--input-bg": activeTheme.input,
+        "--text-primary": activeTheme.textPrimary,
+        "--text-secondary": activeTheme.textSecondary,
+        "--border-color": activeTheme.border,
+        "--container-bg": activeTheme.containerBg,
+      }}
+    >
+      <ChatHeader onToggleThemePicker={toggleThemePicker} />
+      {showThemePicker && (
+        <div className="theme-picker">
+          {themeOptions.map((theme, index) => (
+            <button
+              key={theme.name}
+              type="button"
+              className={`theme-swatch ${selectedTheme === index ? "active" : ""}`}
+              style={{ background: theme.primary }}
+              aria-label={`Select ${theme.name} theme`}
+              onClick={() => {
+                setSelectedTheme(index);
+                setShowThemePicker(false);
+              }}
+            />
+          ))}
+        </div>
+      )}
       <ChatMessages messages={messages} />
       <ChatInput
         input={input}
         onTextChange={handleInputChange}
         onSendMessage={handleSendMessage}
-        disabled={isStreaming}
+        disabled={isStreaming || isUploading}
         onVoiceToggle={handleVoiceToggle}
         onToggleStreaming={handleStreamingToggle}
+        onFileSelect={handleFileUpload}
         useStreaming={useStreaming}
         isRecording={isRecording}
         isSpeechSupported={speechSupported}
+        isUploading={isUploading}
       />
     </div>
   );

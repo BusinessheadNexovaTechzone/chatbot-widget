@@ -3,8 +3,8 @@
   flex-direction: column;
   gap: 10px;
   padding: 12px 12px;
-  background: #f5f5f5;
-  border-top: 1px solid #e0e0e0;
+  background: var(--input-bg);
+  border-top: 1px solid var(--border-color);
   flex-shrink: 0;
 }
 
@@ -41,7 +41,8 @@
   cursor: not-allowed;
 }
 
-.stream-toggle-button {
+.stream-toggle-button,
+.upload-button {
   border: none;
   background: white;
   border-radius: 50%;
@@ -58,6 +59,10 @@
 
 .stream-toggle-button.active {
   background: #dcfce7;
+}
+
+.upload-button {
+  background: white;
 }
 
 .stream-toggle-button:hover:not(:disabled),
@@ -94,7 +99,7 @@
 }
 
 .send-button {
-  background: linear-gradient(135deg, #075e54 0%, #0a7e5e 100%);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   border: none;
   border-radius: 50%;
   width: 36px;

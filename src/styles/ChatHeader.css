@@ -1,5 +1,5 @@
 .chat-header {
-  background: linear-gradient(135deg, #075e54 0%, #0a7e5e 100%);
+  background: linear-gradient(135deg, var(--header-bg), var(--secondary-color));
   color: white;
   padding: 15px 16px;
   display: flex;
@@ -7,6 +7,10 @@
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
+}
+
+.status.online::before {
+  background: var(--secondary-color);
 }
 
 .header-content {
@@ -56,30 +60,30 @@
   gap: 8px;
 }
 
-/* Online status */
-.status {
-  font-size: 12px;
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-.status::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
+.theme-toggle-button {
+  border: none;
+  background: rgba(255, 255, 255, 0.18);
+  color: white;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  margin-right: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.status.online::before {
-  background: #25d366;
-  animation: blink 2s infinite;
+.theme-toggle-button:hover,
+.theme-toggle-button:focus-visible {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.28);
+  outline: none;
 }
 
-.status.offline::before {
-  background: #aaa;
-  animation: none;
+.theme-icon {
+  display: inline-block;
+  font-size: 18px;
 }
 
 @keyframes blink {
